@@ -1,0 +1,47 @@
+---
+title: "Testat VfB tk166"
+author: "Tiana Kleyer"
+date: "5/19/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r igraph-objekt_einlesen, exercise=TRUE, exercise.lines = 10}
+
+library(igraph)
+
+#Netzwerk einlesen 
+
+elvfb <- read.csv("https://raw.githubusercontent.com/tiana881/Testat-Tiana-Kleyer/main/Edgelist_VfB.csv", header=T, as.is=T, sep = ",") #edgelist von github eingelesen 
+
+nodesvfb <- read.csv("https://raw.githubusercontent.com/tiana881/Testat-Tiana-Kleyer/main/Nodelist_VfB.csv", header=T, as.is=T, sep = ",")#nodelist von github eingelesen 
+
+edgematrix <-as.matrix(elvfb) #matrix erstellen 
+
+vfb <- graph_from_data_frame(d=edgematrix, directed=T) #igraph Objekt vfb erstellen, indem edge-und nodelist zusammengefügt werden 
+vfb
+
+```
+
+```{r Einfache Visualisierung des erstellten Objekt, fig.height=4, fig.width=6}
+#Plotting, igraph Objekt darstellen 
+
+plot(vfb,
+     asp=0, #Verhältnisse im Netzwerk sollen erhalten bleiben 
+     layout=layout_nicely, #layout_nicely: so wird ein passendes Layout gewählt
+     rescale=TRUE,
+     vertex.size=degree(vfb)*4,#Parameter für den Knoten, bestimmt Größe nach Degree
+     vertex.frame.color= "black", #Farbe des Rahmens
+     vertex.color="orange", #Farbe des Knotens
+     edge.color="blue",#Farbe der Kanten
+     edge.arrow.size=.3, #Pfeilspitzen auf Größe 5
+     main ="Die Tranfers und der Kader des VfB Stuttgart", #Titel der Abbildung festlegen 
+     sub= "Saison 2021/22") #Untertitel der Abbildung 
+
+
+
+
+```
